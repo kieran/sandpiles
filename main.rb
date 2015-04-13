@@ -51,25 +51,23 @@ class Sandpile
   end
 
   def step
-    drop
+    x = @size / 2
+    y = @size / 2
+    drop x, y
+  end
 
-    @lattice.each_with_index do |v, row, col|
-      if v >= 4
-        topple(v, row, col)
-      end
+  def drop(x,y)
+    return unless x.between? 0, @size
+    return unless y.between? 0, @size
+
+    @lattice[x,y] = @lattice[x,y] + 1
+    if @lattice[x, y] == 4
+      @lattice[x, y] = 0
+      drop x+1, y
+      drop x-1, y
+      drop x, y+1
+      drop x, y-1
     end
-  end
-
-  def topple v, row, col
-    @lattice[row, col] = 0
-    @lattice[row - 1, col] = @lattice[row - 1, col] + 1
-    @lattice[row, col + 1] = @lattice[row, col + 1] + 1
-    @lattice[row + 1, col] = @lattice[row + 1, col] + 1
-    @lattice[row, col - 1] = @lattice[row, col - 1] + 1
-  end
-
-  def drop
-    @lattice[@size / 2, @size / 2] = @lattice[@size / 2, @size / 2] + 1
   end
 
   def color stack_size
