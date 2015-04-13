@@ -57,6 +57,9 @@ class Sandpile
   end
 
   def drop(x,y)
+    return unless x.between? 0, @size
+    return unless y.between? 0, @size
+
     @lattice[x,y] = @lattice[x,y] + 1
     if @lattice[x, y] == 4
       @lattice[x, y] = 0
