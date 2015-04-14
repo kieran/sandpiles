@@ -43,18 +43,18 @@ class Sandpile
         ctx.fillStyle = @colours[ @matrix[x][y] || 0 ]
         ctx.fillRect x, y, 2, 2
 
-  run: (max=100000,from=0,drawEvery=1000)->
+  run: (max=1000000000,from=0,drawEvery=10000)->
     x = y = Math.ceil @size / 2
 
     drawAt = Math.min from+drawEvery, max
 
-    while from < drawAt
-      @drop x, y
-      from++
+    now = Date.now()
+    # drop it like it's hot
+    @drop x, y while ++from < drawAt
+    $('body:first').append $ "<div>#{ (Date.now() - now) / 1000 } seconds</div>"
 
     # run draw in next tick
     window.requestAnimationFrame =>
       @draw()
       # continue?
-      unless from >= max
-        @run max, drawAt, drawEvery
+      @run max, drawAt, drawEvery unless from >= max

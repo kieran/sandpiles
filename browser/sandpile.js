@@ -58,22 +58,23 @@ Sandpile = (function() {
   };
 
   Sandpile.prototype.run = function(max, from, drawEvery) {
-    var drawAt, x, y;
+    var drawAt, now, x, y;
     if (max == null) {
-      max = 100000;
+      max = 1000000000;
     }
     if (from == null) {
       from = 0;
     }
     if (drawEvery == null) {
-      drawEvery = 1000;
+      drawEvery = 10000;
     }
     x = y = Math.ceil(this.size / 2);
     drawAt = Math.min(from + drawEvery, max);
-    while (from < drawAt) {
+    now = Date.now();
+    while (++from < drawAt) {
       this.drop(x, y);
-      from++;
     }
+    $('body:first').append($("<div>" + ((Date.now() - now) / 1000) + " seconds</div>"));
     return window.requestAnimationFrame((function(_this) {
       return function() {
         _this.draw();
