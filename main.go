@@ -4,8 +4,8 @@ package main
 import (
 	"fmt"
 	"image"
-	"image/png"
 	"image/color"
+	"image/png"
 	"os"
 )
 
@@ -61,7 +61,16 @@ func PNGPile(sandpile *Sandpile, name string) {
 	for row := range sandpile.Lattice {
 		for col := range sandpile.Lattice[row] {
 			height := sandpile.Lattice[row][col]
-			m.SetNRGBA(row, col, color.NRGBA{uint8(height * 85), uint8(0), uint8(0), 255})
+			switch height {
+			case 0:
+				m.SetNRGBA(row, col, color.NRGBA{255, 255, 250, 213})
+			case 1:
+				m.SetNRGBA(row, col, color.NRGBA{189, 73, 50, 255})
+			case 2:
+				m.SetNRGBA(row, col, color.NRGBA{219, 158, 54, 255})
+			case 3:
+				m.SetNRGBA(row, col, color.NRGBA{16, 91, 99, 255})
+			}
 		}
 	}
 
@@ -102,21 +111,21 @@ func Drop(sandpile *Sandpile, x int, y int) {
 }
 
 func main() {
-	size := 512
-	iterations := 100000
+	size := 1280
+	iterations := 100000000
 
 	sandpile := NewSandpile(size)
 
 	for i := 0; i < iterations; i++ {
 		Step(sandpile)
 
-		if i%(iterations/100) == 0 {
+		if i%(iterations/10000) == 0 {
 			fmt.Printf("\rOn %d/%d", i, iterations)
+			name := fmt.Sprintf("%dx%d-after-%d-iterations.png", size, size, i)
+			PNGPile(sandpile, name)
 		}
 	}
 
 	// PrintPile(sandpile)
-	name := fmt.Sprintf("%dx%d-after-%d-iterations.png", size, size, iterations)
-	PNGPile(sandpile,name)
 
 }
