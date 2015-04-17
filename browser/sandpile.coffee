@@ -10,8 +10,8 @@ class Sandpile
 
   drop: (x,y)->
     # don't drop off the table
-    return unless 0 <= x <= @size
-    return unless 0 <= y <= @size
+    return unless 0 <= x < @size
+    return unless 0 <= y < @size
 
     @matrix[x][y] = ( @matrix[x][y] || 0 )  + 1
     if @matrix[x][y] == 4
@@ -23,9 +23,9 @@ class Sandpile
 
   colours: [
     "#000" # 0
-    "#600" # 1
+    "#009" # 1
     "#900" # 2
-    "#C00" # 3
+    "#090" # 3
   ]
 
   draw: ->

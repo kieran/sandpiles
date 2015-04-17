@@ -16,10 +16,10 @@ Sandpile = (function() {
   }
 
   Sandpile.prototype.drop = function(x, y) {
-    if (!((0 <= x && x <= this.size))) {
+    if (!((0 <= x && x < this.size))) {
       return;
     }
-    if (!((0 <= y && y <= this.size))) {
+    if (!((0 <= y && y < this.size))) {
       return;
     }
     this.matrix[x][y] = (this.matrix[x][y] || 0) + 1;
@@ -32,7 +32,7 @@ Sandpile = (function() {
     }
   };
 
-  Sandpile.prototype.colours = ["#000", "#600", "#900", "#C00"];
+  Sandpile.prototype.colours = ["#000", "#009", "#900", "#090"];
 
   Sandpile.prototype.draw = function() {
     var ctx, i, len, ref, results, row, val, x, y;
