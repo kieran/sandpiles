@@ -61,7 +61,7 @@ class Sandpile
     return unless y.between? 0, @size
 
     @lattice[x,y] = @lattice[x,y] + 1
-    if @lattice[x, y] == 4
+    if @lattice[x,  y] == 4
       @lattice[x, y] = 0
       drop x+1, y
       drop x-1, y
@@ -73,29 +73,27 @@ class Sandpile
   def color stack_size
     case stack_size
     when 0
-      "#000000"
+      "#FFFFFF"
     when 1
-      "#660000"
+      "#9DC5FF"
     when 2
-      "#990000"
+      "#A65FFF"
     when 3
-      "#CC0000"
+      "#F14B64"
     when 4
       "#FF0000"
     else
-      "#CCFFFF"
+      "#FFFFFF"
     end
   end
 end
 
-sandpile = Sandpile.new(501, debug)
+sandpile = Sandpile.new(18, debug)
 
 i = 0
-1000000000.times do
+1000.times do
   i += 1
   sandpile.step
-  if i.to_f % 10000.0 == 0
-    puts "#{i}/#{1000000000} - #{i.to_f / 1000000000 * 100 }"
-    sandpile.to_img(i)
-  end
 end
+
+sandpile.to_s
