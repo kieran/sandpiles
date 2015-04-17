@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Define the Sandpile structure
 type Sandpile struct {
@@ -69,7 +71,7 @@ func Drop(sandpile *Sandpile, x int, y int) {
 }
 
 func main() {
-	size := 500
+	size := 512
 	iterations := 1000000
 
 	sandpile := NewSandpile(size)
@@ -77,10 +79,11 @@ func main() {
 	for i := 0; i < iterations; i++ {
 		Step(sandpile)
 
-		if i%1000 == 0 {
-			fmt.Printf("%d/%d \n", i, iterations)
+		if i%(iterations/100) == 0 {
+			fmt.Printf("\rOn %d/%d", i, iterations)
 		}
 	}
 
 	PrintPile(sandpile)
+
 }
