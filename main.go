@@ -1,3 +1,4 @@
+// defining the file contents so that they can be imported elsewhere
 package main
 
 import (
@@ -10,7 +11,6 @@ import (
 
 // Define the Sandpile structure
 type Sandpile struct {
-	Frame   int
 	Size    int
 	Lattice [][]int
 }
@@ -18,7 +18,6 @@ type Sandpile struct {
 // Initialize a new Sandpile
 func NewSandpile(size int) *Sandpile {
 	sandpile := new(Sandpile)
-	sandpile.Frame = 0
 	sandpile.Size = size
 	BuildLattice(sandpile)
 	return sandpile
