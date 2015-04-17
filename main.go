@@ -2,6 +2,10 @@ package main
 
 import (
 	"fmt"
+	"image"
+	"image/png"
+	"image/color"
+	"os"
 )
 
 // Define the Sandpile structure
@@ -72,7 +76,7 @@ func Drop(sandpile *Sandpile, x int, y int) {
 
 func main() {
 	size := 512
-	iterations := 1000000
+	iterations := 500000
 
 	sandpile := NewSandpile(size)
 
@@ -84,6 +88,30 @@ func main() {
 		}
 	}
 
-	PrintPile(sandpile)
+	// PrintPile(sandpile)
+
+	// start a new png
+	f, err := os.Create("test.png")
+
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	// start a new image
+	m := image.NewNRGBA(image.Rectangle{Min: image.Point{0, 0}, Max: image.Point{512, 512}})
+
+	// write out the pile values
+	for x := 0; x < 512; x++ {
+		for y := 0; y < 512; y++ {
+			height := sandpile.Lattice[x][y]
+			m.SetNRGBA(x, y, color.NRGBA{uint8(height * 60), uint8(0), uint8(0), 255})
+		}
+	}
+
+	if err = png.Encode(f, m); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
 }
