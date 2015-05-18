@@ -69,7 +69,7 @@ func PNGPile(sandpile *Sandpile, name string) {
 			case 2:
 				m.SetNRGBA(row, col, color.NRGBA{219, 158, 54, 255})
 			case 3:
-				m.SetNRGBA(row, col, color.NRGBA{16, 91, 99, 255})
+				m.SetNRGBA(row, col, color.NRGBA{99, 15, 35, 255})
 			}
 		}
 	}
@@ -100,9 +100,9 @@ func Drop(sandpile *Sandpile, x int, y int) {
 		return
 	}
 
-	sandpile.Lattice[x][y] = sandpile.Lattice[x][y] + 1
-	if sandpile.Lattice[x][y] == 4 {
-		sandpile.Lattice[x][y] = 0
+	sandpile.Lattice[x][y] += 1
+	if sandpile.Lattice[x][y] >= 4 {
+		sandpile.Lattice[x][y] -= 4
 		Drop(sandpile, x+1, y)
 		Drop(sandpile, x-1, y)
 		Drop(sandpile, x, y+1)
@@ -111,7 +111,7 @@ func Drop(sandpile *Sandpile, x int, y int) {
 }
 
 func main() {
-	size := 1280
+	size := 4096
 	iterations := 100000000
 
 	sandpile := NewSandpile(size)
